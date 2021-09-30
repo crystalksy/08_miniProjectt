@@ -4,6 +4,7 @@ import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import shirt2 from '../img/shirt2.png'
+import {NavLink} from "react-router-dom"
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -31,7 +32,6 @@ const TopButton = styled.button`
 const TopTexts = styled.div``
 const TopText = styled.span`
     text-decoration:underline;
-    cursor:pointer;
     margin:0px 10px;
 `
 
@@ -131,12 +131,14 @@ const Cart = () => {
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
-                    <TopButton>CONTINUE YOUR SHOPPING</TopButton>
+                    <NavLink exact to='/productlist'>
+                        <TopButton>CONTINUE YOUR SHOPPING</TopButton>
+                    </NavLink>
+                    
                     <TopTexts>
                         <TopText>Shopping Bag (2)</TopText>
-                        <TopText>Your Wishlist (0)</TopText>
                     </TopTexts>
-                    <TopButton type="filled">CHECKOUT NOW</TopButton>
+               
                 </Top>
                 <Bottom>
                     <Info>

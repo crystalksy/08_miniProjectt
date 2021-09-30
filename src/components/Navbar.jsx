@@ -3,6 +3,7 @@ import { Search, ShoppingCartOutlined } from '@material-ui/icons'
 import React from 'react'
 import styled from 'styled-components'
 import {mobile} from "../responsive"
+import {NavLink} from "react-router-dom"
 
 const Container = styled.div`
     height : 60px;
@@ -24,11 +25,6 @@ const Left=styled.div`
     align-items: center;
 `;
 
-const Language = styled.span`
-    font-size: 14px;
-    cursor: pointer;
-    ${mobile({display:"none"})}
-`;
 const SearchContainer = styled.div`
     border: 1px solid lightgray;
     display: flex;
@@ -72,7 +68,7 @@ const Navbar = () => {
         <Container>
             <Wrapper>
                 <Left>
-                    <Language style={{color:'#A1593C'}}>EN</Language>
+
                     <SearchContainer>
                         <Input placeholder="Search"/>
                      <Search style={{color: 'gray', fontSize:16}}/>
@@ -81,13 +77,19 @@ const Navbar = () => {
                 </Left>
                 <Center><Logo style={{color:'#A1593C'}}>RUBICC</Logo></Center>
                 <Right>
-                    <MenuItem style={{color:'#A1593C'}}>REGISTER</MenuItem>
-                    <MenuItem style={{color:'#A1593C'}}>SIGN IN</MenuItem>
-                    <MenuItem>
-                    <Badge badgeContent = {4} color = "primary"> 
-                    <ShoppingCartOutlined/>
-                    </Badge>
-                    </MenuItem>
+                    <NavLink exact to='/register'> 
+                        <MenuItem style={{color:'#A1593C'}}>REGISTER</MenuItem>
+                    </NavLink>
+                    <NavLink exact to='/login'>
+                        <MenuItem style={{color:'#A1593C'}}>SIGN IN</MenuItem>
+                    </NavLink>
+                    <NavLink exact to='/cart'>
+                        <MenuItem>
+                            <Badge badgeContent = {4} color = "primary"> 
+                                <ShoppingCartOutlined/>
+                            </Badge>
+                        </MenuItem>
+                    </NavLink>
                    
                 </Right>
             </Wrapper>

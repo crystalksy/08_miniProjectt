@@ -18,7 +18,7 @@ import  {ApolloProvider, gql, useQuery } from "@apollo/client"
   }
   `
 
-  const {data} = useQuery (GetTodo);
+
 
 const Info = styled.div`
     opacity:0;
@@ -81,6 +81,8 @@ const Icon = styled.div`
 `
 
 const Product = ({item}) => {
+  const {data} = useQuery (GetTodo);
+    console.log(data);
     return (
         <div>
             <Container>

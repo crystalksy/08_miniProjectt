@@ -77,6 +77,9 @@ const Navbar = () => {
                 </Left>
                 <Center><Logo style={{color:'#A1593C'}}>RUBICC</Logo></Center>
                 <Right>
+                    <NavLink exact to='/'>
+                        <MenuItem style={{color:'#A1593C'}}>HOME</MenuItem>
+                    </NavLink>
                     <NavLink exact to='/register'> 
                         <MenuItem style={{color:'#A1593C'}}>REGISTER</MenuItem>
                     </NavLink>

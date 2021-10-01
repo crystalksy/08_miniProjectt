@@ -1,7 +1,6 @@
 import {NavLink} from "react-router-dom"
 import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons"
 import styled from "styled-components"
-
 import  {ApolloProvider, gql, useQuery } from "@apollo/client"
 
   const GetTodo = gql`
@@ -17,8 +16,6 @@ import  {ApolloProvider, gql, useQuery } from "@apollo/client"
     }
   }
   `
-
-
 
 const Info = styled.div`
     opacity:0;
@@ -46,6 +43,7 @@ const Container = styled.div`
     justify-content:center;
     background-color:#f5fbfd;
     position:relative;
+    display:inline-flex;
 
     &:hover ${Info}{
         opacity:1;
@@ -79,34 +77,29 @@ const Icon = styled.div`
         transform:scale(1.1);
     }
 `
-
-const Product = ({item}) => {
+const Product = () => {
   const {data} = useQuery (GetTodo);
     console.log(data);
     return (
         <div>
-            <Container>
-                        <Circle/>
-                        {data?.Produk.map((elementProduk)=>(
-                            <NavLink exact to='/cart'>
-                                <Icon>
-                                    <ShoppingCartOutlined/>
-                                </Icon>
-                            </NavLink>
-                        ))}
-                        <Image src={item.img}/>
-                        <Info>
-                            
-                            <NavLink exact to='/product'>
-                                <Icon>
-                                    <SearchOutlined/>
-                                </Icon>
-                            </NavLink>
-
-                        </Info>
-                        
-                    </Container>
-
+            {data?.Produk.map((elementProduk) => (
+                <Container>
+                   {/* <Circle/> */}
+                   <Image src={elementProduk.gambar}/>
+                   <Info>
+                       <NavLink exact to='/cart'>
+                           <Icon>
+                               <ShoppingCartOutlined/>
+                           </Icon>
+                       </NavLink>
+                        <NavLink exact to='/product'>
+                            <Icon>
+                                <SearchOutlined/>
+                            </Icon>
+                        </NavLink>
+                    </Info>
+                </Container>
+            ))}
         </div>
         
     )

@@ -5,13 +5,29 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import NewsLetter from "../components/Newsletter"
 import shirt2 from '../img/shirt2.png'
+import {NavLink} from "react-router-dom"
 
 const Container = styled.div`
    
 `
 const Wrapper = styled.div`
-    padding:50px;
+    padding:20px;
     display:flex;
+`
+
+const Top = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px;
+`
+const TopButton = styled.button`
+    padding:10px;
+    font-weight:600;
+    cursor:pointer;
+    border:${(props)=>props.type === "filled" && "none"};
+    background-color:${(props)=>props.type === "filled" ? "black" : "transparent"};
+    color:${(props)=>props.type === "filled" && "white"};
 `
 const ImgContainer = styled.div`
     flex:1;
@@ -101,6 +117,11 @@ const Product = () => {
             <Announcement/>
             <Navbar/>
             <Wrapper>
+                <Top>
+                    <NavLink exact to='/productlist'>
+                        <TopButton>CONTINUE YOUR SHOPPING</TopButton>
+                    </NavLink>
+                </Top>
                 <ImgContainer>
                     <Image src={shirt2}/>
                 </ImgContainer>
@@ -132,7 +153,9 @@ const Product = () => {
                             <Amount>1</Amount>
                             <Add/>
                         </AmountContainer>
+                        <NavLink exact to='/cart'> 
                         <Button>ADD TO CART</Button>
+                        </NavLink>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

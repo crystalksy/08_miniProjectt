@@ -2,6 +2,24 @@ import {NavLink} from "react-router-dom"
 import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons"
 import styled from "styled-components"
 
+import  {ApolloProvider, gql, useQuery } from "@apollo/client"
+
+  const GetTodo = gql`
+  query MyQuery {
+    Produk {
+      deskripsi_Produk
+      gambar
+      harga
+      id
+      id_Kategori
+      is_ready
+      nama
+    }
+  }
+  `
+
+  const {data} = useQuery (GetTodo);
+
 const Info = styled.div`
     opacity:0;
     width:100%;
@@ -64,23 +82,31 @@ const Icon = styled.div`
 
 const Product = ({item}) => {
     return (
-        <Container>
-            <Circle/>
-            <Image src={item.img}/>
-            <Info>
-                <NavLink exact to='/cart'>
-                    <Icon>
-                        <ShoppingCartOutlined/>
-                    </Icon>
-                </NavLink>
-                <NavLink exact to='/product'>
-                    <Icon>
-                        <SearchOutlined/>
-                    </Icon>
-                </NavLink>
+        <div>
+            <Container>
+                        <Circle/>
+                        {data?.Produk.map((elementProduk)=>(
+                            <NavLink exact to='/cart'>
+                                <Icon>
+                                    <ShoppingCartOutlined/>
+                                </Icon>
+                            </NavLink>
+                        ))}
+                        <Image src={item.img}/>
+                        <Info>
+                            
+                            <NavLink exact to='/product'>
+                                <Icon>
+                                    <SearchOutlined/>
+                                </Icon>
+                            </NavLink>
 
-            </Info>
-        </Container>
+                        </Info>
+                        
+                    </Container>
+
+        </div>
+        
     )
 }
 

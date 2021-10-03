@@ -79,11 +79,8 @@ const Button = styled.button`
 `
 
 const Slider = () => {
-
-
     const [slideIndex,setSlideIndex] = useState(0)
     const handleClick=(direction) => {
-        
         if(direction==="left"){
             setSlideIndex(slideIndex > 0? slideIndex-1 : 2)
         } else {
@@ -109,8 +106,7 @@ const Slider = () => {
                                 </NavLink>
                             </InfoContainer>
                     </Slide>
-                ))}
-               
+                ))} 
             </Wrapper>
             <Arrow direction='right' onClick={()=>handleClick("right")}>
                 <ArrowRightOutlined/>

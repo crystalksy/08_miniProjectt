@@ -1,5 +1,8 @@
 import styled from "styled-components"
-import registerPict from '../img/fullteam.png'
+import Footer from '../components/Footer'
+import Navbar from '../components/Navbar'
+import Announcement from '../components/Announcement'
+import {NavLink} from "react-router-dom"
 
 const Container = styled.div`
     width:100vw;
@@ -37,7 +40,7 @@ const Button = styled.button`
     width:40%;
     border:none;
     padding:15px 20px;
-    background-color:teal;
+    background-color:#C29200;
     color:white;
     cursor:pointer;
 `
@@ -45,7 +48,10 @@ const Button = styled.button`
 
 const Register = () => {
     return (
-        <Container  src={registerPict}>
+        <div>
+            <Announcement/>
+            <Navbar/>
+            <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
                 <Form>
@@ -58,10 +64,14 @@ const Register = () => {
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
-                    <Button>CREATE</Button>
+                    {/* <NavLink exact to='/productlist'> */}
+                        <Button>CREATE</Button>
+                    {/* </NavLink> */}
                 </Form>
             </Wrapper>
         </Container>
+        <Footer/>
+        </div>
     )
 }
 

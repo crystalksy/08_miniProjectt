@@ -1,4 +1,9 @@
+import React from 'react'
 import styled from "styled-components"
+import Footer from '../components/Footer'
+import Navbar from '../components/Navbar'
+import Announcement from '../components/Announcement'
+import {NavLink} from "react-router-dom"
 
 const Container = styled.div`
     width:100vw;
@@ -32,7 +37,7 @@ const Button = styled.button`
     width:40%;
     border:none;
     padding:15px 20px;
-    background-color:teal;
+    background-color:#C29200;
     color:white;
     cursor:pointer;
     margin-bottom:10px;
@@ -48,7 +53,10 @@ const Link = styled.a`
 
 const Login = () => {
     return (
-        <Container>
+        <div>
+            <Announcement/>
+            <Navbar/>
+            <Container>       
             <Wrapper>
                 <Title>SIGN IN</Title>
                 <Form>
@@ -56,10 +64,15 @@ const Login = () => {
                     <Input placeholder="password"/>
                     <Button>LOGIN</Button>
                     <Link>DO YOU NOT REMEMBER THE PASSWORD?</Link>
-                    <Link>CREATE A NEW ACCOUNT</Link>
+                    <NavLink exact to='/register'>
+                        <Link>CREATE A NEW ACCOUNT</Link>
+                    </NavLink>
                 </Form>
             </Wrapper>
         </Container>
+        <Footer/>
+        </div>
+       
     )
 }
 

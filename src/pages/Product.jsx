@@ -7,9 +7,7 @@ import NewsLetter from "../components/Newsletter"
 import shirt2 from '../img/shirt2.png'
 import {NavLink} from "react-router-dom"
 
-const Container = styled.div`
-   
-`
+const Container = styled.div``
 const Wrapper = styled.div`
     padding:20px;
     display:flex;
@@ -115,13 +113,13 @@ const Product = () => {
     return (
         <Container>
             <Announcement/>
-            <Navbar/>
+            <Navbar/>   
+            <Top>
+                <NavLink exact to='/productlist'>
+                    <TopButton>CONTINUE YOUR SHOPPING</TopButton>
+                </NavLink>
+            </Top>
             <Wrapper>
-                <Top>
-                    <NavLink exact to='/productlist'>
-                        <TopButton>CONTINUE YOUR SHOPPING</TopButton>
-                    </NavLink>
-                </Top>
                 <ImgContainer>
                     <Image src={shirt2}/>
                 </ImgContainer>

@@ -1,4 +1,4 @@
-import { Add, Remove } from "@material-ui/icons"
+import { Add, CloseOutlined, Remove } from "@material-ui/icons"
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
@@ -27,12 +27,6 @@ const TopButton = styled.button`
     border:${(props)=>props.type === "filled" && "none"};
     background-color:${(props)=>props.type === "filled" ? "black" : "transparent"};
     color:${(props)=>props.type === "filled" && "white"};
-`
-
-const TopTexts = styled.div``
-const TopText = styled.span`
-    text-decoration:underline;
-    margin:0px 10px;
 `
 
 const Bottom = styled.div`
@@ -134,16 +128,11 @@ const Cart = () => {
                     <NavLink exact to='/productlist'>
                         <TopButton>CONTINUE YOUR SHOPPING</TopButton>
                     </NavLink>
-                    
-                    <TopTexts>
-                        <TopText>Shopping Bag (2)</TopText>
-                    </TopTexts>
-               
                 </Top>
                 <Bottom>
                     <Info>
                         <Product>
-                            <ProductDetail>
+                            <ProductDetail> <CloseOutlined fontSize ="large"/>
                                 <Image src={shirt2}/>
                                 <Details>
                                     <ProductName><b>Product:</b>DESSIE THUNDER SHOES</ProductName>
@@ -163,7 +152,7 @@ const Cart = () => {
                         </Product>
                         <Hr/>
                         <Product>
-                            <ProductDetail>
+                            <ProductDetail> <CloseOutlined fontSize ="large"/>
                                 <Image src={shirt2}/>
                                 <Details>
                                     <ProductName><b>Product:</b>DESSIE THUNDER SHOES</ProductName>

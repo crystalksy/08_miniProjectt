@@ -75,20 +75,20 @@ const Navbar = () => {
                     </SearchContainer>
                     
                 </Left>
-                <Center><Logo style={{color:'#A1593C'}}>RUBICC</Logo></Center>
+                <Center><Logo style={{color:'#C29200'}}>R U B I C C</Logo></Center>
                 <Right>
                     <NavLink exact to='/'>
-                        <MenuItem style={{color:'#A1593C'}}>HOME</MenuItem>
+                        <MenuItem style={{color:'#C29200'}}>HOME</MenuItem>
                     </NavLink>
                     <NavLink exact to='/register'> 
-                        <MenuItem style={{color:'#A1593C'}}>REGISTER</MenuItem>
+                        <MenuItem style={{color:'#C29200'}}>REGISTER</MenuItem>
                     </NavLink>
                     <NavLink exact to='/login'>
-                        <MenuItem style={{color:'#A1593C'}}>SIGN IN</MenuItem>
+                        <MenuItem style={{color:'#C29200'}}>SIGN IN</MenuItem>
                     </NavLink>
                     <NavLink exact to='/cart'>
                         <MenuItem>
-                            <Badge badgeContent = {4} color = "primary"> 
+                            <Badge badgeContent = {2} color = "primary"> 
                                 <ShoppingCartOutlined/>
                             </Badge>
                         </MenuItem>

@@ -5,27 +5,29 @@ import { gql, useQuery, useLazyQuery, useMutation} from '@apollo/client';
 import { useEffect, useState } from 'react'
 
 export default function DetailBaju(props) {
+  //bener
     const GetTodo = gql`
     query MyQuery {
       Produk {
         deskripsi_Produk
         gambar
-        harga
         id
+        harga
         id_Kategori
         is_ready
         nama
       }
     }
     `
+//bener
    const GetEmail = gql`
    query MyQuery {
-      Email(limit: 1, order_by: {id: desc}) {
-        id
-        email
-      }
-    }
-   `
+    Email(limit: 1, order_by: {id: desc}) {
+      id
+      email
+  }
+}
+`
    const GetDetail = gql`
       query MyQuery($id: Int!) {
       Produk(where: {id: {_eq: $id}}) {
@@ -38,30 +40,37 @@ export default function DetailBaju(props) {
         nama
       }
     }
-    `
+  
+  `
+  //harusnya int! dan id:$id
   const DeleteEmail = gql`
-  mutation MyMutation($email: String!) {
-      delete_Email_by_pk(email: $email) {
-        email
-        id
-      }
+  mutation MyMutation($email: String !) {
+    delete_Email_by_pk(email: $email) {
+      email
+      id
     }
+  }
   `
+  //harusnya mutation MyMutation2($id: Int!, $message: String = "") {
+   // update_Message_by_pk(pk_columns: {id: $id}, _set: {message: $message}) {
   const UpdateEmail = gql`
-  mutation MyMutation($email: String !, $email1: String = "") {
-      update_Email_by_pk(pk_columns: {email: $email}, _set: {email: $email1}) {
-        id
-        email
-      }
+  mutation MyMutation($email: String!, $email1: String = "") {
+    update_Email_by_pk(pk_columns: {email: $email}, _set: {email: $email1}) {
+      email
+      id
     }
+  }
   `
+
+  //bener
   const InsertEmail = gql`
-  mutation MyMutation($object: Email_insert_input !) {
-      insert_Email_one(object: $object) {
-        id
-        email
-      }
+  mutation MyMutation($object: Email_insert_input!) {
+    insert_Email_one(object: $object) {
+      email
+      id
     }
+  }
+  
   `
   const Container = styled.div`
       height:60vh;
@@ -150,7 +159,7 @@ export default function DetailBaju(props) {
           deleteEmail({variables: {
              id: idx.target.value
            }})
-  },
+  };
   
   // const NewsLetter = () => {
       return (
@@ -177,9 +186,5 @@ export default function DetailBaju(props) {
   
                           ))}
           </Container>
-      )
-  }
-
-
-
-
+      });
+    };

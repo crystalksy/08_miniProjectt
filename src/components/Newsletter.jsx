@@ -19,14 +19,15 @@ export default function DetailBaju(props) {
       }
     }
     `
-//bener
+
    const GetEmail = gql`
    query MyQuery {
-    Email(limit: 1, order_by: {id: desc}) {
+    Email2(limit: 1, order_by: {id: desc}) {
       id
-      email
+      Email
+    }
   }
-}
+  
 `
    const GetDetail = gql`
       query MyQuery($id: Int!) {
@@ -42,32 +43,29 @@ export default function DetailBaju(props) {
     }
   
   `
-  //harusnya int! dan id:$id
+
   const DeleteEmail = gql`
-  mutation MyMutation($email: String !) {
-    delete_Email_by_pk(email: $email) {
-      email
+  mutation MyMutation($id: Int!) {
+    delete_Email2_by_pk(id: $id) {
       id
+      Email
     }
   }
   `
-  //harusnya mutation MyMutation2($id: Int!, $message: String = "") {
-   // update_Message_by_pk(pk_columns: {id: $id}, _set: {message: $message}) {
   const UpdateEmail = gql`
-  mutation MyMutation($email: String!, $email1: String = "") {
-    update_Email_by_pk(pk_columns: {email: $email}, _set: {email: $email1}) {
-      email
+  mutation MyMutation($id: Int!, $Email: String = "") {
+    update_Email2_by_pk(pk_columns: {id: $id}, _set: {Email: $Email}) {
       id
+      Email
     }
   }
   `
 
-  //bener
   const InsertEmail = gql`
-  mutation MyMutation($object: Email_insert_input!) {
-    insert_Email_one(object: $object) {
-      email
+  mutation MyMutation($object: Email2_insert_input!) {
+    insert_Email2_one(object: $object) {
       id
+      Email
     }
   }
   
@@ -118,7 +116,7 @@ export default function DetailBaju(props) {
         const [getDetail, { data, loading, error }] = useLazyQuery(GetDetail);
         console.log("detail baju props", data);
       
-        const { data: dataEmail, loading:loadingEmail, error:errorEmail } = useQuery(GetMessage);
+        const { data: dataEmail, loading:loadingEmail, error:errorEmail } = useQuery(GetEmail);
         console.log("detail baju props", data);
         const [user, setUser] = useState(initialData);
         const [updateEmail, { loading:loadingUpdate}] = useMutation(UpdateEmail);
@@ -147,7 +145,8 @@ export default function DetailBaju(props) {
             // untuk masukkan input
             const handleInput = (e) => {
               console.log("masuk handle input")
-             const email = e.target.email;
+             const email = e.target.email
+             const value = e.target.value;
              setUser({
                ...user,
                [email]: value,
@@ -186,5 +185,5 @@ export default function DetailBaju(props) {
   
                           ))}
           </Container>
-      });
-    };
+          )  } )
+    }

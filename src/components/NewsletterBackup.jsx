@@ -4,8 +4,7 @@ import { mobile } from '../responsive'
 import { gql, useQuery, useLazyQuery, useMutation} from '@apollo/client';
 import { useEffect, useState } from 'react'
 
-export default function Newsletter(props) {
-  //bener
+
     const GetTodo = gql`
     query MyQuery {
       Produk {
@@ -19,7 +18,6 @@ export default function Newsletter(props) {
       }
     }
     `
-
    const GetEmail = gql`
    query MyQuery {
     Email2(limit: 1, order_by: {id: desc}) {
@@ -43,7 +41,6 @@ export default function Newsletter(props) {
     }
   
   `
-
   const DeleteEmail = gql`
   mutation MyMutation($id: Int!) {
     delete_Email2_by_pk(id: $id) {
@@ -60,7 +57,6 @@ export default function Newsletter(props) {
     }
   }
   `
-
   const InsertEmail = gql`
   mutation MyMutation($object: Email2_insert_input!) {
     insert_Email2_one(object: $object) {
@@ -108,59 +104,57 @@ export default function Newsletter(props) {
       background-color:#C29200;
       color:white;
   `
-  // const Product = (props) => {
+
+  const NewsLetter = (props) => {
     const initialData = {    //ini buat message
-          email: "",
-         
-      }
-        const [getDetail, { data, loading, error }] = useLazyQuery(GetDetail);
-        console.log("detail baju props", data);
-      
-        const { data: dataEmail, loading:loadingEmail, error:errorEmail } = useQuery(GetEmail);
-        console.log("detail baju props", data);
-        const [user, setUser] = useState(initialData);
-        const [updateEmail, { loading:loadingUpdate}] = useMutation(UpdateEmail);
-        const [deleteEmail, {loading : loadingDelete}] = useMutation(DeleteEmail,{
-          refetchQueries: [GetEmail]
-        });
-        const [insertEmail, {loading:loadingInsert}] = useMutation(InsertEmail, {
-          refetchQueries: [GetEmail]
-        })
-       
-      
-        useEffect (()=>{
-          getDetail({variables : {id: props.match.params.id}});
-          console.log("saya masuk ke get detail shirt");
-          const onSubmitList = (e) => {
-              console.log("masuk submit")
-              e.preventDefault();
-              insertEmail({variables : {
-                object : {
-                  email: user.emaill,
-               }
-              }});
-              setUser(initialData)
-            };
-         
-            // untuk masukkan input
-            const handleInput = (e) => {
-              console.log("masuk handle input")
-             const email = e.target.email
-             const value = e.target.value;
-             setUser({
-               ...user,
-               [email]: value,
-             });
-         };
-         
-         const onDeleteItem =  (idx) => {
-         console.log("idx= detele item", idx.target.value )
-          deleteEmail({variables: {
-             id: idx.target.value
-           }})
-  };
+      email: "",
+     
+  }
+    const [getDetail, { data, loading, error }] = useLazyQuery(GetDetail);
+    console.log("detail baju props", data);
   
-  // const NewsLetter = () => {
+    const { data: dataEmail, loading:loadingEmail, error:errorEmail } = useQuery(GetEmail);
+    console.log("detail baju props", data);
+    const [user, setUser] = useState(initialData);
+    const [updateEmail, { loading:loadingUpdate}] = useMutation(UpdateEmail);
+    const [deleteEmail, {loading : loadingDelete}] = useMutation(DeleteEmail,{
+      refetchQueries: [GetEmail]
+    });
+    const [insertEmail, {loading:loadingInsert}] = useMutation(InsertEmail, {
+      refetchQueries: [GetEmail]
+    })
+   
+    useEffect (()=>{
+      getDetail({variables : {id: props.match.params.id}});
+      console.log("saya masuk ke get detail shirt");
+      const onSubmitList = (e) => {
+          console.log("masuk submit")
+          e.preventDefault();
+          insertEmail({variables : {
+            object : {
+              email: user.email,
+           }
+          }});
+          setUser(initialData)
+        };
+     
+        // untuk masukkan input
+        const handleInput = (e) => {
+          console.log("masuk handle input")
+         const email = e.target.email
+         const value = e.target.value;
+         setUser({
+           ...user,
+           [email]: value,
+         });
+     };
+     
+     const onDeleteItem =  (idx) => {
+     console.log("idx= detele item", idx.target.value )
+      deleteEmail({variables: {
+         id: idx.target.value
+       }})
+};
       return (
           <Container>
               <Title>Newsletter</Title>
@@ -173,7 +167,6 @@ export default function Newsletter(props) {
               </InputContainer>
               {dataEmail?.Email.map((show) => (
                               <li className='komen-list card-kontent mb-4'>
-                                
                                     <div className="">
                                         <h5 style={{paddingLeft: "20px"}} className="card-titles ml-4 mt-3">{show.email}</h5>
                                         <button 
@@ -185,3 +178,4 @@ export default function Newsletter(props) {
           </Container>
             )  } )
     }
+    export default NewsLetter

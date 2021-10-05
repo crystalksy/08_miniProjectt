@@ -101,7 +101,7 @@ export default function DetailBaju(props) {
       background-color:#C29200;
       color:white;
   `
-  const Product = (props) => {
+  // const Product = (props) => {
       const initialData = {    //ini buat message
           email: "",
          
@@ -109,7 +109,7 @@ export default function DetailBaju(props) {
         const [getDetail, { data, loading, error }] = useLazyQuery(GetDetail);
         console.log("detail baju props", data);
       
-        const { data: dataMessage, loading:loadingMessage, error:errorMessage } = useQuery(GetMessage);
+        const { data: dataEmail, loading:loadingEmail, error:errorEmail } = useQuery(GetMessage);
         console.log("detail baju props", data);
         const [user, setUser] = useState(initialData);
         const [updateEmail, { loading:loadingUpdate}] = useMutation(UpdateEmail);
@@ -122,15 +122,14 @@ export default function DetailBaju(props) {
        
       
         useEffect (()=>{
-          GetDetail({variables : {id: props.match.params.id}});
+          getDetail({variables : {id: props.match.params.id}});
           console.log("saya masuk ke get detail shirt");
           const onSubmitList = (e) => {
               console.log("masuk submit")
               e.preventDefault();
-              InsertEmail({variables : {
+              insertEmail({variables : {
                 object : {
-                  username: user.username,
-                 message: user.message
+                  email: user.emaill,
                }
               }});
               setUser(initialData)
@@ -139,40 +138,36 @@ export default function DetailBaju(props) {
             // untuk masukkan input
             const handleInput = (e) => {
               console.log("masuk handle input")
-             const name = e.target.name
-             const value = e.target.value;
+             const email = e.target.email;
              setUser({
                ...user,
-               [name]: value,
+               [email]: value,
              });
          };
          
          const onDeleteItem =  (idx) => {
          console.log("idx= detele item", idx.target.value )
-           deleteMessage({variables: {
+          deleteEmail({variables: {
              id: idx.target.value
            }})
   },
   
-  const NewsLetter = () => {
+  // const NewsLetter = () => {
       return (
           <Container>
               <Title>Newsletter</Title>
               <Desc>Get timely updates from your favourite products</Desc>
               <InputContainer>
-                  <Input placeholder="Your email"  onChange={handleInput}value={user.email}/>
+                  <Input placeholder="Your email"  onChange={handleInput} value={user.email}/>
                   <Button>
                       <Send onSubmit={onSubmitList}/>
                   </Button>
               </InputContainer>
-              {dataMessage?.Message.map((show) => (
+              {dataEmail?.Email.map((show) => (
                               <li className='komen-list card-kontent mb-4'>
                                 
                                     <div className="">
-                                        <h5 style={{paddingLeft: "20px"}} className="card-titles ml-4 mt-3">{show.username}</h5>
-                                        <p 
-                                        style={{paddingRight: "100px", paddingLeft: "55px"}}
-                                        className="card-text ml-4 mt-3">{show.message}</p>
+                                        <h5 style={{paddingLeft: "20px"}} className="card-titles ml-4 mt-3">{show.email}</h5>
                                         <button 
                                         type="submit" style={{background: "#FFDAC1"}} className="btn"
                                         onClick={onDeleteItem} value={show.id} className="del">Delete</button>
@@ -184,7 +179,7 @@ export default function DetailBaju(props) {
           </Container>
       )
   }
-}
 
 
-// export default NewsLetter
+
+

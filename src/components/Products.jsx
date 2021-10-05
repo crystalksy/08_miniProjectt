@@ -78,13 +78,9 @@ const Product = () => {
             {data?.Produk.map((elementProduk) => (
                 <Container>
                    <Image src={elementProduk.gambar}/>
-                   <Info>
-                       <NavLink exact to='/cart'>
-                           <Icon>
-                               <ShoppingCartOutlined/>
-                           </Icon>
-                       </NavLink>
-                        <NavLink exact to='/product'>
+                   <Info> 
+                      
+                       <NavLink exact to = {'/product/' + elementProduk.id}>
                             <Icon>
                                 <SearchOutlined/>
                             </Icon>

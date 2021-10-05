@@ -5,6 +5,23 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import shirt2 from '../img/shirt2.png'
 import {NavLink} from "react-router-dom"
+import  {ApolloProvider, gql, useQuery, useLazyQuery } from "@apollo/client"
+import { useEffect } from "react"
+
+
+const GetCart = gql`
+    query MyQuery($id: Int!) {
+    Produk(where: {id: {_eq: $id}}) {
+      deskripsi_Produk
+      gambar
+      harga
+      id
+      id_Kategori
+      is_ready
+      nama
+    }
+  }
+  `
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -117,85 +134,118 @@ const SummaryButton = styled.button`
     font-weight:600;
 `
 
-const Cart = () => {
+const Cart = (props) => {
+    const [GetCartProduct, {data, loading, error} ]= useLazyQuery (GetCart);
+    console.log("detail", props);
+    useEffect(() => {
+        GetCartProduct({
+            variables : {id:props.match.params.id}
+        })
+        
+    }, []);
+    console.log("masuk ke detail")
     return (
-        <Container>
-            <Announcement/>
-            <Navbar/>
-            <Wrapper>
-                <Title>YOUR BAG</Title>
-                <Top>
-                    <NavLink exact to='/productlist'>
-                        <TopButton>CONTINUE YOUR SHOPPING</TopButton>
-                    </NavLink>
-                </Top>
-                <Bottom>
-                    <Info>
-                        <Product>
-                            <ProductDetail> <CloseOutlined fontSize ="large"/>
-                                <Image src={shirt2}/>
-                                <Details>
-                                    <ProductName><b>Product:</b>DESSIE THUNDER SHOES</ProductName>
-                                    <ProductID><b>ID:</b>9763244195</ProductID>
-                                    <ProductColor color="black"/>
-                                    <ProductSize><b>Size:</b>38</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add/>
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove/>
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 30</ProductPrice>
-                            </PriceDetail>
-                        </Product>
-                        <Hr/>
-                        <Product>
-                            <ProductDetail> <CloseOutlined fontSize ="large"/>
-                                <Image src={shirt2}/>
-                                <Details>
-                                    <ProductName><b>Product:</b>DESSIE THUNDER SHOES</ProductName>
-                                    <ProductID><b>ID:</b>9763244195</ProductID>
-                                    <ProductColor color="black"/>
-                                    <ProductSize><b>Size:</b>38</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add/>
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove/>
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 30</ProductPrice>
-                            </PriceDetail>
-                        </Product>
-                    </Info>
-                    <Summary>
-                        <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                        <SummaryItem>
-                            <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ 80</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemText>Estimated Shipping</SummaryItemText>
-                            <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemText>Shipping Discount</SummaryItemText>
-                            <SummaryItemPrice>-$ 5.90</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem type="total">
-                            <SummaryItemText >Total</SummaryItemText>
-                            <SummaryItemPrice>$ 80</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryButton>CHECKOUT NOW</SummaryButton>
-                    </Summary>
-                </Bottom>
-            </Wrapper>
-            
-            <Footer/>
-        </Container>
+        <div>
+            {data?.Produk.map((elementProduk) => (
+                <Container>
+                <Announcement/>
+                <Navbar/>
+                <Wrapper>
+                    <Title>YOUR BAG</Title>
+                    <Top>
+                        <NavLink exact to='/productlist'>
+                            <TopButton>CONTINUE YOUR SHOPPING</TopButton>
+                        </NavLink>
+                    </Top>
+                    <Bottom>
+                        <Info>
+                            <Product>
+                                <ProductDetail> <CloseOutlined fontSize ="large"/>
+                                    <Image src={elementProduk.gambar}/>
+                                    <Details>
+                                        <ProductName><b>Product:</b>{elementProduk.nama}</ProductName>
+                                        <ProductID><b>ID:</b>{elementProduk.id_Kategori}</ProductID>
+                                        <ProductColor color="black"/>
+                                        <ProductSize><b>Size:</b>38</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add/>
+                                        <ProductAmount>2</ProductAmount>
+                                        <Remove/>
+                                    </ProductAmountContainer>
+                                    <ProductPrice>{elementProduk.harga}</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                            <Product>
+                                <ProductDetail> <CloseOutlined fontSize ="large"/>
+                                    <Image src={elementProduk.gambar}/>
+                                    <Details>
+                                        <ProductName><b>Product:</b>{elementProduk.nama}</ProductName>
+                                        <ProductID><b>ID:</b>{elementProduk.id_Kategori}</ProductID>
+                                        <ProductColor color="black"/>
+                                        <ProductSize><b>Size:</b>38</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add/>
+                                        <ProductAmount>2</ProductAmount>
+                                        <Remove/>
+                                    </ProductAmountContainer>
+                                    <ProductPrice>{elementProduk.harga}</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                            <Hr/>
+                            <Product>
+                                <ProductDetail> <CloseOutlined fontSize ="large"/>
+                                    <Image src={shirt2}/>
+                                    <Details>
+                                        <ProductName><b>Product:</b>DESSIE THUNDER SHOES</ProductName>
+                                        <ProductID><b>ID:</b>9763244195</ProductID>
+                                        <ProductColor color="black"/>
+                                        <ProductSize><b>Size:</b>38</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add/>
+                                        <ProductAmount>2</ProductAmount>
+                                        <Remove/>
+                                    </ProductAmountContainer>
+                                    <ProductPrice>$ 30</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        </Info>
+                        <Summary>
+                            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                            <SummaryItem>
+                                <SummaryItemText>Subtotal</SummaryItemText>
+                                <SummaryItemPrice>{elementProduk.harga}</SummaryItemPrice>
+                            </SummaryItem>
+                            <SummaryItem>
+                                <SummaryItemText>Estimated Shipping</SummaryItemText>
+                                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+                            </SummaryItem>
+                            <SummaryItem>
+                                <SummaryItemText>Shipping Discount</SummaryItemText>
+                                <SummaryItemPrice>-$ 5.90</SummaryItemPrice>
+                            </SummaryItem>
+                            <SummaryItem type="total">
+                                <SummaryItemText >Total</SummaryItemText>
+                                <SummaryItemPrice>$ 80</SummaryItemPrice>
+                            </SummaryItem>
+                            <SummaryButton>CHECKOUT NOW</SummaryButton>
+                        </Summary>
+                    </Bottom>
+                </Wrapper>
+                
+                <Footer/>
+            </Container>
+            ))}
+        </div>
+        
     )
 }
 

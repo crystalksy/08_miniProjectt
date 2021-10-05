@@ -6,6 +6,24 @@ import Navbar from "../components/Navbar"
 import NewsLetter from "../components/Newsletter"
 import shirt2 from '../img/shirt2.png'
 import {NavLink} from "react-router-dom"
+import  {ApolloProvider, gql, useQuery, useLazyQuery } from "@apollo/client"
+import { useEffect } from "react"
+
+
+const GetDetail = gql`
+    query MyQuery($id: Int!) {
+    Produk(where: {id: {_eq: $id}}) {
+      deskripsi_Produk
+      gambar
+      harga
+      id
+      id_Kategori
+      is_ready
+      nama
+    }
+  }
+  `
+
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -109,57 +127,71 @@ const Button = styled.button`
     }
 `
 
-const Product = () => {
+const Product = (props) => {
+    const [GetDetailProduct, {data, loading, error} ]= useLazyQuery (GetDetail);
+    console.log("cart", props);
+    useEffect(() => {
+        GetDetailProduct({
+            variables : {id:props.match.params.id}
+        })
+    }, []);
+    console.log("masuk ke cart")
     return (
-        <Container>
-            <Announcement/>
-            <Navbar/>   
-            <Top>
-                <NavLink exact to='/productlist'>
-                    <TopButton>CONTINUE YOUR SHOPPING</TopButton>
-                </NavLink>
-            </Top>
-            <Wrapper>
-                <ImgContainer>
-                    <Image src={shirt2}/>
-                </ImgContainer>
-                <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, ipsam porro tenetur rerum tempore sed excepturi repellendus necessitatibus consectetur repudiandae fugit officiis ullam sit obcaecati, quod veritatis labore eaque quos!</Desc>
-                    <Price>$ 20</Price>
-                    <FilterContainer>
-                        <Filter>
-                            <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black"/>
-                            <FilterColor color="darkblue"/>
-                            <FilterColor color="gray"/>
-                        </Filter>
-                        <Filter>
-                            <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
-                                <FilterSizeOption>S</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
-                                <FilterSizeOption>XXL</FilterSizeOption>
-                            </FilterSize>
-                        </Filter>
-                    </FilterContainer>
-                    <AddContainer>
-                        <AmountContainer>
-                            <Remove/>
-                            <Amount>1</Amount>
-                            <Add/>
-                        </AmountContainer>
-                        <NavLink exact to='/cart'> 
-                        <Button>ADD TO CART</Button>
-                        </NavLink>
-                    </AddContainer>
-                </InfoContainer>
-            </Wrapper>
-            <NewsLetter/>
-            <Footer/>
-        </Container>
+        <div>
+            {data?.Produk.map((elementProduk) => (
+                 <Container>
+                 <Announcement/>
+                 <Navbar/>   
+                 <Top>
+                     <NavLink exact to='/productlist'>
+                         <TopButton>CONTINUE YOUR SHOPPING</TopButton>
+                     </NavLink>
+                 </Top>
+                 <Wrapper>
+                     <ImgContainer>
+                         <Image src={elementProduk.gambar}/>
+                     </ImgContainer>
+                     <InfoContainer>
+                         <Title> {elementProduk.nama}</Title>
+
+                         <Desc>{elementProduk.deskripsi_Produk}</Desc>
+                         <Price>{elementProduk.harga}</Price>
+                         <FilterContainer>
+                             <Filter>
+                                 <FilterTitle>Color</FilterTitle>
+                                 <FilterColor color="black"/>
+                                 <FilterColor color="darkblue"/>
+                                 <FilterColor color="gray"/>
+                             </Filter>
+                             <Filter>
+                                 <FilterTitle>Size</FilterTitle>
+                                 <FilterSize>
+                                     <FilterSizeOption>S</FilterSizeOption>
+                                     <FilterSizeOption>M</FilterSizeOption>
+                                     <FilterSizeOption>L</FilterSizeOption>
+                                     <FilterSizeOption>XL</FilterSizeOption>
+                                     <FilterSizeOption>XXL</FilterSizeOption>
+                                 </FilterSize>
+                             </Filter>
+                         </FilterContainer>
+                         <AddContainer>
+                             <AmountContainer>
+                                 <Remove/>
+                                 <Amount>1</Amount>
+                                 <Add/>
+                             </AmountContainer>
+                             <NavLink exact to={'/cart/' + elementProduk.id}> 
+                             <Button>ADD TO CART</Button>
+                             </NavLink>
+                         </AddContainer>
+                     </InfoContainer>
+                 </Wrapper>
+                 <NewsLetter/>
+                 <Footer/>
+             </Container>
+            ))}
+        </div>
+       
     )
 }
 

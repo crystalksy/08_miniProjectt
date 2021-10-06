@@ -3,9 +3,9 @@ import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
-import NewsletterBackup from '../components/NewsletterBackup'
+// import NewsletterBackup from '../components/NewsletterBackup'
 import Slider from '../components/Slider'
-// import NewsletterCopy from '../components/NewsletterCopy'
+import NewsletterCopy from '../components/NewsletterCopy'
 
 const Home = () => {
     return (
@@ -14,8 +14,8 @@ const Home = () => {
           <Navbar/>  
           <Slider/>
           <Newsletter/>
-          <NewsletterBackup/>
-          {/* <NewsletterCopy/> */}
+          {/* <NewsletterBackup/> */}
+          <NewsletterCopy/>
           <Footer/>
         </div>
     )

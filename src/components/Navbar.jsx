@@ -88,7 +88,7 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink exact to='/cart'>
                         <MenuItem>
-                            <Badge badgeContent = {2} color = "primary"> 
+                            <Badge badgeContent = {1} color = "primary"> 
                                 <ShoppingCartOutlined/>
                             </Badge>
                         </MenuItem>
@@ -102,3 +102,39 @@ const Navbar = () => {
 }
 
 export default Navbar
+// const GetEmail = gql`
+//    query MyQuery {
+//     Email2(limit: 1, order_by: {id: desc}) {
+//       id
+//       Email
+//     }
+//   }
+  
+// `
+
+//   const DeleteEmail = gql`
+//   mutation MyMutation($id: Int!) {
+//     delete_Email2_by_pk(id: $id) {
+//       id
+//       Email
+//     }
+//   }
+//   `
+//   const UpdateEmail = gql`
+//   mutation MyMutation($id: Int!, $Email: String = "") {
+//     update_Email2_by_pk(pk_columns: {id: $id}, _set: {Email: $Email}) {
+//       id
+//       Email
+//     }
+//   }
+//   `
+
+//   const InsertEmail = gql`
+//   mutation MyMutation($object: Email2_insert_input!) {
+//     insert_Email2_one(object: $object) {
+//       id
+//       Email
+//     }
+//   }
+  
+//   `

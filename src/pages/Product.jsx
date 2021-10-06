@@ -4,9 +4,8 @@ import Announcement from "../components/Announcement"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import NewsLetter from "../components/Newsletter"
-import shirt2 from '../img/shirt2.png'
 import {NavLink} from "react-router-dom"
-import  {ApolloProvider, gql, useQuery, useLazyQuery } from "@apollo/client"
+import  {gql, useLazyQuery } from "@apollo/client"
 import { useEffect } from "react"
 
 
@@ -128,7 +127,7 @@ const Button = styled.button`
 `
 
 const Product = (props) => {
-    const [GetDetailProduct, {data, loading, error} ]= useLazyQuery (GetDetail);
+    const [GetDetailProduct, {data} ]= useLazyQuery (GetDetail);
     console.log("cart", props);
     useEffect(() => {
         GetDetailProduct({

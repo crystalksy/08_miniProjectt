@@ -41,6 +41,7 @@ const Button = styled.button`
     border:none;
     background-color:#C29200;
     color:white;
+    cursor : pointer;
 `
 const InsertEmail = gql`
 mutation MyMutation($email: String!) {
@@ -53,7 +54,6 @@ mutation MyMutation($email: String!) {
     }
   }
 `
-
 const GetEmail = gql`
    query MyQuery {
     Email3(limit: 1, order_by: {id: desc}) {
@@ -62,26 +62,39 @@ const GetEmail = gql`
     }
   }
 `
-
-const NewsLetter = () => {
-    const  [email,setEmail] = useState ("")
-    const [insertEmail, {loading:loadingInsert,data:dataMutasi}] = useMutation(InsertEmail, {
+const ShowEmail = gql`
+  query MyQuery($id: Int !) {
+  email3(where: {id: {_eq: $id}}) {
+    email
+    id
+  }
+}
+`
+const NewsLetter = (props) => {
+    const [getDetailShirt, { data, loading, error }] = useLazyQuery(ShowEmail);
+    console.log("detail baju props", data);
+    const [email,setEmail] = useState ("")
+    const [insertEmail, {data:dataEmail}] = useMutation(InsertEmail, {
         refetchQueries: [GetEmail]
       })
-    function handleInput(e){
+      console.log("dataEmail",dataEmail)
+       function handleInput(e){
         console.log("handleInput",e.target.value)
         setEmail (e.target.value) //akses 89
     }
-    function handleSubmit(){
+      function handleSubmit(){
         console.log("handleSubmit",email) 
         insertEmail({variables : {
         email: email,
         }});
-    }
-
+      }
+ useEffect (()=>{
+    getDetailShirt({variables : {id: props.match.params.id}});
+    console.log("saya masuk ke get detail shirt");
+  }, [])
     return (
         <Container>
-            <Title>Newsletter</Title>
+            <Title>NewsletterCopy</Title>
             <Desc>Get timely updates from your favourite products</Desc>
             <InputContainer>
                 <Input placeholder="Your email" onChange={handleInput} value={email}/>
@@ -89,8 +102,18 @@ const NewsLetter = () => {
                     <Send />
                 </Button>
             </InputContainer>
+              {/* {dataEmail?.Email3.map((show) => (
+                              <li className='komen-list card-kontent mb-4'>
+                                    <div className="">
+                                        <h5 style={{paddingLeft: "20px"}} className="card-titles ml-4 mt-3">{show.Email}</h5>
+                                        <button 
+                                        type="submit" style={{background: "#FFDAC1"}} className="btn"
+                                          className="del">Delete</button>
+                                    </div>
+                            </li>
+                          ))} */}
         </Container>
-    )
+      );
 }
 
 export default NewsLetter

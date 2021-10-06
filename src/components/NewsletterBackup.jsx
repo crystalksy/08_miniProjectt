@@ -104,11 +104,10 @@ import { useEffect, useState } from 'react'
       background-color:#C29200;
       color:white;
   `
-
   const NewsLetter = (props) => {
     const initialData = {    //ini buat message
       email: "",
-     
+
   }
     const [getDetail, { data, loading, error }] = useLazyQuery(GetDetail);
     console.log("detail baju props", data);
@@ -137,7 +136,6 @@ import { useEffect, useState } from 'react'
           }});
           setUser(initialData)
         };
-     
         // untuk masukkan input
         const handleInput = (e) => {
           console.log("masuk handle input")
@@ -150,7 +148,7 @@ import { useEffect, useState } from 'react'
      };
      
      const onDeleteItem =  (idx) => {
-     console.log("idx= detele item", idx.target.value )
+     console.log("idx= delete item", idx.target.value )
       deleteEmail({variables: {
          id: idx.target.value
        }})

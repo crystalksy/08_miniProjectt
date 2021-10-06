@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom"
-import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons"
+import { SearchOutlined } from "@material-ui/icons"
 import styled from "styled-components"
-import  {ApolloProvider, gql, useQuery } from "@apollo/client"
+import  {gql, useQuery } from "@apollo/client"
 
 const GetTodo = gql`
   query MyQuery {

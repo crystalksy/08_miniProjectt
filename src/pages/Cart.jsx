@@ -3,9 +3,8 @@ import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
-import shirt2 from '../img/shirt2.png'
 import {NavLink} from "react-router-dom"
-import  {ApolloProvider, gql, useQuery, useLazyQuery } from "@apollo/client"
+import  {gql, useLazyQuery } from "@apollo/client"
 import { useEffect } from "react"
 
 
@@ -100,13 +99,6 @@ const ProductPrice = styled.div`
     font-weight:200;
 
 `
-
-const Hr = styled.hr`
-    background-color: #eee;
-    border:none;
-    height:2px;
-`
-
 const Summary = styled.div`
     flex:1;
     border: 0.5px solid lightgray;
@@ -132,10 +124,11 @@ const SummaryButton = styled.button`
     background-color:black;
     color:white;
     font-weight:600;
+    cursor : pointer;
 `
 
 const Cart = (props) => {
-    const [GetCartProduct, {data, loading, error} ]= useLazyQuery (GetCart);
+    const [GetCartProduct, {data} ]= useLazyQuery (GetCart);
     console.log("detail", props);
     useEffect(() => {
         GetCartProduct({
@@ -166,55 +159,16 @@ const Cart = (props) => {
                                         <ProductName><b>Product:</b>{elementProduk.nama}</ProductName>
                                         <ProductID><b>ID:</b>{elementProduk.id_Kategori}</ProductID>
                                         <ProductColor color="black"/>
-                                        <ProductSize><b>Size:</b>38</ProductSize>
+                                        <ProductSize><b>Size:</b>S</ProductSize>
                                     </Details>
                                 </ProductDetail>
                                 <PriceDetail>
                                     <ProductAmountContainer>
                                         <Add/>
-                                        <ProductAmount>2</ProductAmount>
+                                        <ProductAmount>1</ProductAmount>
                                         <Remove/>
                                     </ProductAmountContainer>
                                     <ProductPrice>{elementProduk.harga}</ProductPrice>
-                                </PriceDetail>
-                            </Product>
-                            <Product>
-                                <ProductDetail> <CloseOutlined fontSize ="large"/>
-                                    <Image src={elementProduk.gambar}/>
-                                    <Details>
-                                        <ProductName><b>Product:</b>{elementProduk.nama}</ProductName>
-                                        <ProductID><b>ID:</b>{elementProduk.id_Kategori}</ProductID>
-                                        <ProductColor color="black"/>
-                                        <ProductSize><b>Size:</b>38</ProductSize>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add/>
-                                        <ProductAmount>2</ProductAmount>
-                                        <Remove/>
-                                    </ProductAmountContainer>
-                                    <ProductPrice>{elementProduk.harga}</ProductPrice>
-                                </PriceDetail>
-                            </Product>
-                            <Hr/>
-                            <Product>
-                                <ProductDetail> <CloseOutlined fontSize ="large"/>
-                                    <Image src={shirt2}/>
-                                    <Details>
-                                        <ProductName><b>Product:</b>DESSIE THUNDER SHOES</ProductName>
-                                        <ProductID><b>ID:</b>9763244195</ProductID>
-                                        <ProductColor color="black"/>
-                                        <ProductSize><b>Size:</b>38</ProductSize>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add/>
-                                        <ProductAmount>2</ProductAmount>
-                                        <Remove/>
-                                    </ProductAmountContainer>
-                                    <ProductPrice>$ 30</ProductPrice>
                                 </PriceDetail>
                             </Product>
                         </Info>
@@ -234,9 +188,11 @@ const Cart = (props) => {
                             </SummaryItem>
                             <SummaryItem type="total">
                                 <SummaryItemText >Total</SummaryItemText>
-                                <SummaryItemPrice>$ 80</SummaryItemPrice>
+                                <SummaryItemPrice>{elementProduk.harga}</SummaryItemPrice>
                             </SummaryItem>
-                            <SummaryButton>CHECKOUT NOW</SummaryButton>
+                            <NavLink exact to={'/confirmed/' + elementProduk.id}> 
+                             <SummaryButton>ADD TO CART</SummaryButton>
+                             </NavLink>
                         </Summary>
                     </Bottom>
                 </Wrapper>
